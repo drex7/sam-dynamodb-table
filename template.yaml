@@ -3,6 +3,12 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   SAM template to provision a DynamoDB table for a ToDo application.
 
+Parameters:
+  ProjectTag:
+    Type: String
+    Default: "week7-project1"
+    Description: "Tag to identify resources for the project"
+
 Resources:
   TaskTable:
     Type: AWS::DynamoDB::Table
