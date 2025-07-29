@@ -13,11 +13,9 @@ jobs:
 
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      OIDC_ROLE: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubOIDCRole
       STACK_NAME: taskify-dynamodb
       S3_BUCKET: ${{ secrets.SAM_S3_BUCKET }}
-      CFN_EXEC_ROLE: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/CloudFormationExecRole
+      CFN_EXEC_ROLE: ${{ secrets.AWS_CFN_EXEC_ROLE }}
 
     steps:
       - name: Checkout source
@@ -31,7 +29,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.OIDC_ROLE }}
+          role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Install AWS SAM CLI
