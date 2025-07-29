@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM template to provision a DynamoDB table for a ToDo application.
+
+Resources:
+  TaskTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: TaskifyTask
+      BillingMode: PAY_PER_REQUEST
+
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: createdAt
+          AttributeType: S
+        - AttributeName: title
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+        - AttributeName: dueDate
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: createdAt
+          KeyType: RANGE
+
+      GlobalSecondaryIndexes:
+        - IndexName: ByStatusIndex
+          KeySchema:
+            - AttributeName: status
+              KeyType: HASH
+            - AttributeName: createdAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: ByDueDateIndex
+          KeySchema:
+            - AttributeName: dueDate
+              KeyType: HASH
+            - AttributeName: createdAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+      Tags:
+        - Key: lab
+          Value: !Ref ProjectTag
+
+Outputs:
+  TaskTableName:
+    Description: "DynamoDB table name"
+    Value: !Ref TaskTable
+  TaskTableArn:
+    Description: "DynamoDB table ARN"
+    Value: !GetAtt TaskTable.Arn
