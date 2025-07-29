@@ -21,8 +21,6 @@ Resources:
           AttributeType: S
         - AttributeName: createdAt
           AttributeType: S
-        - AttributeName: title
-          AttributeType: S
         - AttributeName: status
           AttributeType: S
         - AttributeName: dueDate

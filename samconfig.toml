@@ -1,9 +1,9 @@
 version = 0.1
 
 [default.deploy.parameters]
-stack_name = "taskify-dynamodb"
+stack_name = "dynamodb-sam"
 resolve_s3 = true
-s3_prefix = "taskify-dynamodb"
+s3_prefix = "dynamodb-sam"
 region = "eu-central-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
