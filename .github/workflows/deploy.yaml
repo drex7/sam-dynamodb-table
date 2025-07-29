@@ -21,7 +21,8 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Run CloudFormation Linter
+      - name: Run CloudFormation Linter 
+        if: ${{ github.event_name == 'push' }}
         uses: scottbrenner/cfn-lint-action@v2
         with:
           command: cfn-lint -t template.yaml
